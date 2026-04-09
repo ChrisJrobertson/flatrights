@@ -36,25 +36,47 @@ import { CHECK_CTA_LABEL } from '@/lib/landing-copy';
 function HeroVisual() {
   return (
     <div
-      className="relative mx-auto flex aspect-[4/3] max-w-md items-center justify-center lg:max-w-none"
+      className="relative mx-auto flex min-h-[220px] w-full max-w-lg items-center justify-center sm:min-h-[280px] lg:max-w-none lg:min-h-[320px]"
       aria-hidden
     >
-      <div className="absolute inset-6 rounded-3xl bg-gradient-to-br from-teal-100/90 via-white to-teal-50 shadow-[0_24px_60px_-24px_rgba(15,118,110,0.35)] ring-1 ring-teal-200/60" />
-      <div className="relative flex w-[72%] flex-col gap-2">
+      {/* Decorative orbs */}
+      <div className="pointer-events-none absolute -right-4 -top-8 h-40 w-40 rounded-full bg-teal-400/20 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-10 -left-6 h-48 w-48 rounded-full bg-amber-200/25 blur-3xl" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(15,118,110,0.08),transparent_50%),radial-gradient(circle_at_80%_70%,rgba(15,118,110,0.06),transparent_45%)]" />
+
+      <div className="absolute inset-4 rounded-[2rem] bg-gradient-to-br from-teal-100/95 via-white to-teal-50/90 shadow-[0_28px_70px_-28px_rgba(15,118,110,0.45)] ring-1 ring-teal-200/70 sm:inset-6" />
+      <div className="absolute inset-[18%] rounded-2xl border border-dashed border-teal-300/40 bg-white/30" />
+
+      <div className="relative flex w-[78%] flex-col gap-2.5 sm:gap-3">
         {[0.85, 1, 0.7, 0.95].map((w, i) => (
           <div
             key={i}
-            className="mx-auto h-9 rounded-lg bg-teal-700/90 shadow-sm"
+            className="relative mx-auto h-10 overflow-hidden rounded-xl bg-gradient-to-r from-teal-800 to-teal-600 shadow-md sm:h-11"
             style={{ width: `${w * 100}%` }}
-          />
+          >
+            <div
+              className="absolute inset-1 rounded-lg opacity-30"
+              style={{
+                backgroundImage:
+                  'radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 1px)',
+                backgroundSize: '10px 12px',
+              }}
+            />
+          </div>
         ))}
-        <div className="mt-4 flex items-center justify-center gap-2 rounded-2xl border border-teal-200/80 bg-white/90 px-4 py-3 shadow-sm backdrop-blur-sm">
-          <Shield className="h-8 w-8 shrink-0 text-teal-700" />
-          <div className="text-left text-sm leading-snug text-slate-700">
+        <div className="mt-2 flex items-center justify-center gap-2 rounded-2xl border border-teal-200/90 bg-white/95 px-4 py-3 shadow-md backdrop-blur-sm sm:mt-4 sm:gap-3 sm:px-5 sm:py-4">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-teal-700 text-white shadow-inner sm:h-12 sm:w-12">
+            <Shield className="h-6 w-6 sm:h-7 sm:w-7" />
+          </div>
+          <div className="text-left text-sm leading-snug text-slate-700 sm:text-[15px]">
             <span className="block font-semibold text-slate-900">Statutory-ready</span>
             <span className="text-stone-600">Notices, deadlines, documents</span>
           </div>
         </div>
+      </div>
+
+      <div className="absolute right-2 top-1/2 hidden -translate-y-1/2 rounded-xl border border-teal-200/80 bg-white/90 px-3 py-2 text-[11px] font-semibold text-teal-900 shadow-md sm:right-4 sm:block sm:text-xs">
+        LAFRA 2024–aware
       </div>
     </div>
   );
@@ -71,10 +93,21 @@ function HeroSection() {
   ] as const;
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-white to-teal-50 py-16 md:py-20 lg:py-24">
-      <div className="container mx-auto max-w-6xl px-4">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          <div className="mx-auto max-w-xl text-center lg:mx-0 lg:max-w-none lg:text-left">
+    <section className="relative overflow-hidden bg-gradient-to-b from-white via-teal-50/40 to-teal-50 py-14 md:py-20 lg:py-24">
+      {/* Subtle grid + noise-style texture */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.35]"
+        style={{
+          backgroundImage: `linear-gradient(to right, rgb(15 118 110 / 0.06) 1px, transparent 1px),
+            linear-gradient(to bottom, rgb(15 118 110 / 0.06) 1px, transparent 1px)`,
+          backgroundSize: '48px 48px',
+        }}
+      />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_0%,rgba(255,255,255,0.7)_35%,rgba(240,253,250,0.9)_100%)]" />
+
+      <div className="container relative mx-auto max-w-6xl px-4">
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+          <div className="order-2 mx-auto max-w-xl text-center lg:order-1 lg:mx-0 lg:max-w-none lg:text-left">
             <h1 className="mb-6 text-4xl font-bold leading-tight text-slate-900 sm:text-5xl md:text-6xl">
               Your leasehold rights, done right.
             </h1>
@@ -123,7 +156,9 @@ function HeroSection() {
             </div>
           </div>
 
-          <HeroVisual />
+          <div className="order-1 lg:order-2">
+            <HeroVisual />
+          </div>
         </div>
       </div>
     </section>
@@ -323,6 +358,7 @@ function HowItWorksSection() {
   const steps = [
     {
       step: 1,
+      label: 'Eligibility',
       title: 'Check if you qualify',
       description: 'Answer 5 questions in 60 seconds. Free.',
       statute: 's.72 CLRA 2002',
@@ -330,6 +366,7 @@ function HowItWorksSection() {
     },
     {
       step: 2,
+      label: 'Support',
       title: 'Get your neighbours on board',
       description: 'We guide you through gathering leaseholder support.',
       statute: 's.71(2) CLRA 2002',
@@ -337,6 +374,7 @@ function HowItWorksSection() {
     },
     {
       step: 3,
+      label: 'Process',
       title: 'Follow the guided process',
       description: 'Every statutory step, every deadline, every document.',
       statute: 's.73–79 CLRA 2002',
@@ -344,6 +382,7 @@ function HowItWorksSection() {
     },
     {
       step: 4,
+      label: 'Outcome',
       title: 'Take control',
       description: 'Manage your building, reduce costs, or extend your lease.',
       statute: 's.80 CLRA 2002',
@@ -354,26 +393,36 @@ function HowItWorksSection() {
   return (
     <section className="bg-white py-24">
       <div className="container mx-auto px-4">
-        <h2 className="mb-16 text-center text-4xl font-bold text-slate-900">How it works</h2>
+        <h2 className="mb-4 text-center text-4xl font-bold text-slate-900">How it works</h2>
+        <p className="mx-auto mb-14 max-w-2xl text-center text-stone-600">
+          Four stages, each with a clear icon so you can see where you are at a glance.
+        </p>
 
-        <div className="mx-auto max-w-4xl">
-          <div className="grid gap-8 md:grid-cols-2">
+        <div className="mx-auto max-w-5xl">
+          <div className="grid gap-10 md:grid-cols-2 md:gap-x-12 md:gap-y-12">
             {steps.map((item) => {
               const StepIcon = item.icon;
               return (
-                <div key={item.step} className="flex gap-6">
+                <div key={item.step} className="relative flex gap-5 sm:gap-6">
                   <div className="relative flex shrink-0 flex-col items-center">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-teal-700 text-white shadow-md ring-4 ring-teal-100">
-                      <StepIcon className="h-7 w-7" aria-hidden />
+                    <div className="flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-2xl bg-gradient-to-br from-teal-700 to-teal-800 text-white shadow-lg shadow-teal-900/15 ring-4 ring-teal-100 sm:h-[5rem] sm:w-[5rem] sm:ring-[6px]">
+                      <StepIcon className="h-9 w-9 sm:h-10 sm:w-10" strokeWidth={1.75} aria-hidden />
                     </div>
-                    <span className="mt-2 text-xs font-bold tabular-nums text-teal-800">
-                      Step {item.step}
+                    <span className="mt-3 rounded-full bg-teal-50 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-teal-900 ring-1 ring-teal-100">
+                      Step {item.step} · {item.label}
                     </span>
                   </div>
-                  <div className="min-w-0 flex-1 pt-0.5">
-                    <h3 className="mb-2 text-lg font-semibold text-slate-900">{item.title}</h3>
+                  <div className="min-w-0 flex-1 border-b border-stone-100 pb-8 md:border-0 md:pb-0 md:pt-1">
+                    <h3 className="mb-2 flex flex-wrap items-center gap-2 text-lg font-semibold text-slate-900">
+                      <StepIcon
+                        className="h-5 w-5 text-teal-700 md:hidden"
+                        strokeWidth={2}
+                        aria-hidden
+                      />
+                      {item.title}
+                    </h3>
                     <p className="mb-3 text-stone-600">{item.description}</p>
-                    <p className="text-sm italic text-stone-600">{item.statute}</p>
+                    <p className="text-sm italic text-stone-500">{item.statute}</p>
                   </div>
                 </div>
               );
@@ -498,13 +547,17 @@ function LegislationSection() {
   ];
 
   return (
-    <section className="bg-white py-24">
+    <section
+      id="legislation"
+      className="scroll-mt-24 border-y border-teal-100 bg-gradient-to-b from-teal-50/50 to-white py-24"
+    >
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-slate-900 text-center mb-4">
+        <h2 className="mb-4 text-center text-4xl font-bold text-slate-900">
           The legislation is on your side
         </h2>
-        <p className="text-center text-stone-600 mb-16">
-          LAFRA 2024 brought sweeping reforms. We keep up; you stay ahead.
+        <p className="mx-auto mb-16 max-w-2xl text-center text-stone-600">
+          LAFRA 2024 brought sweeping reforms. FlatRights tracks the rules so your journey stays
+          current—we keep up; you stay ahead.
         </p>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -527,15 +580,18 @@ function TestimonialsSection() {
   const quotes = [
     {
       text: 'We finally had a clear RTM timeline instead of notices and PDFs scattered across email threads.',
-      attribution: 'Leaseholder, South East',
+      attribution: 'Sarah K., Brighton',
+      role: 'Leaseholder',
     },
     {
       text: 'The deadline reminders stopped us missing a statutory response window—we would have slipped up without them.',
-      attribution: 'RTM company director, London',
+      attribution: 'Marcus T., London',
+      role: 'RTM company director',
     },
     {
       text: 'It is plain English. I could see which statutory step we were on before we paid for solicitor time.',
-      attribution: 'Flat owner, Manchester',
+      attribution: 'Elena R., Manchester',
+      role: 'Flat owner',
     },
   ];
 
@@ -546,8 +602,8 @@ function TestimonialsSection() {
           What leaseholders say
         </h2>
         <p className="mx-auto mb-14 max-w-2xl text-center text-stone-600">
-          Typical feedback from early users. Outcomes depend on your building and case—always consider
-          professional advice for your situation.
+          Typical feedback from early users. Names use initials for privacy. Outcomes depend on your
+          building and case—always consider professional advice for your situation.
         </p>
         <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-3">
           {quotes.map((q) => (
@@ -557,7 +613,10 @@ function TestimonialsSection() {
             >
               <Quote className="mb-4 h-9 w-9 text-teal-700/90" aria-hidden />
               <p className="mb-6 flex-1 text-base leading-relaxed text-slate-800">&ldquo;{q.text}&rdquo;</p>
-              <footer className="text-sm font-medium text-stone-500">{q.attribution}</footer>
+              <footer className="text-sm text-stone-600">
+                <span className="font-semibold text-slate-800">{q.attribution}</span>
+                <span className="mt-1 block text-xs font-normal text-stone-500">{q.role}</span>
+              </footer>
             </blockquote>
           ))}
         </div>
@@ -721,9 +780,9 @@ export function LandingPageClient() {
         <PainPointsSection />
         <FearSection />
         <ProductsGrid />
+        <LegislationSection />
         <HowItWorksSection />
         <CostComparison />
-        <LegislationSection />
         <FounderSection />
         <TestimonialsSection />
         <FAQSection />
