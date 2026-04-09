@@ -1,0 +1,23 @@
+# FlatRights — Cursor rules
+
+## Positioning (user-facing copy)
+- The product sells **risk reduction**, not convenience. The core fear: *if I get this wrong, I lose my rights.*
+- **Never** use: `AI-generated`, `AI-drafted`, `AI writes`, or unqualified **legally compliant**.
+- **Do** use: *follows the statutory requirements of [Act] [section]*, *prescribed statutory format*, *information tool (not legal advice)*.
+
+## Next.js 16 network boundary
+- Use **`src/proxy.ts`** exporting a function named **`proxy`** plus **`config.matcher`**. Session refresh lives in `src/lib/supabase/middleware.ts` (`updateSession`).
+- **Do not** add `src/middleware.ts` for new work — deprecated for this app’s Next 16 setup.
+
+## Secrets
+- Never commit real keys. Use **`.env.local`** locally; **`.env.example`** documents placeholder names only.
+
+## Build order
+- Implement features in the order listed in **`CURSOR_PROMPTS.md`** (Prompts 1–18). Prompts 1–8 target a launchable RTM path.
+
+## Supabase
+- Use `@supabase/ssr` patterns in `src/lib/supabase/client.ts` and `server.ts`. Regenerate types:  
+  `npx supabase gen types typescript --project-id bsqaranndomlkmaokdkb > src/types/database.ts`
+
+## When in doubt
+- Read **`PROJECT_SYNOPSIS.md`**, **`DATABASE_SCHEMA.md`**, and **`CURSOR_PROMPTS.md`** before large changes.

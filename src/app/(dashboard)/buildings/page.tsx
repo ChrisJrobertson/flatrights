@@ -35,12 +35,18 @@ export default async function BuildingsPage() {
           </div>
           <h2 className="text-2xl font-semibold text-gray-900">Add your first building</h2>
           <p className="mt-2 max-w-md text-gray-600">
-            Get started by checking if your building qualifies for Right to Manage
+            Run the free eligibility check, or add a building manually if you already know the details.
           </p>
-          <Link href="/check" className={cn(buttonVariants({ size: "lg" }), "mt-6 gap-2 bg-teal-700 hover:bg-teal-800")}>
-            Check eligibility
-            <ArrowRight className="h-4 w-4" />
-          </Link>
+          <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row">
+            <Link href="/check" className={cn(buttonVariants({ size: "lg" }), "gap-2 bg-teal-700 hover:bg-teal-800")}>
+              Check if you qualify
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link href="/building/new" className={cn(buttonVariants({ size: "lg", variant: "outline" }), "gap-2")}>
+              <Plus className="h-4 w-4" />
+              Add building
+            </Link>
+          </div>
         </div>
       </div>
     )
