@@ -1,6 +1,35 @@
 import Link from 'next/link'
 import { Shield } from 'lucide-react'
 
+function RegistrationLines() {
+  const ch = process.env.NEXT_PUBLIC_COMPANIES_HOUSE_NUMBER?.trim()
+  const ico = process.env.NEXT_PUBLIC_ICO_REGISTRATION_NUMBER?.trim()
+
+  if (ch && ico) {
+    return (
+      <p className="leading-relaxed">
+        Companies House: {ch}
+        <br />
+        ICO registration: {ico}
+      </p>
+    )
+  }
+
+  return (
+    <p className="leading-relaxed">
+      Company number and ICO registration are published in our{' '}
+      <Link href="/terms" className="text-slate-300 underline-offset-2 hover:text-white hover:underline">
+        Terms
+      </Link>{' '}
+      and{' '}
+      <Link href="/privacy" className="text-slate-300 underline-offset-2 hover:text-white hover:underline">
+        Privacy Policy
+      </Link>
+      .
+    </p>
+  )
+}
+
 export function Footer() {
   return (
     <footer className="bg-slate-900 px-6 py-12 text-[13px] text-slate-400 lg:px-8">
@@ -18,11 +47,7 @@ export function Footer() {
             their statutory rights. It is not a legal service and does not
             provide legal advice.
           </p>
-          <p className="leading-relaxed">
-            Companies House: [number]
-            <br />
-            ICO Registration: [number]
-          </p>
+          <RegistrationLines />
         </div>
 
         {/* Products */}

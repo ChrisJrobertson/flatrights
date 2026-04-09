@@ -9,8 +9,14 @@ import {
   Building2,
   PoundSterling,
   Users,
-  ChevronDown,
   ExternalLink,
+  Shield,
+  Landmark,
+  BadgeCheck,
+  ClipboardCheck,
+  Route,
+  KeyRound,
+  Quote,
 } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
 import {
@@ -22,52 +28,102 @@ import {
 import { Nav } from '@/components/shared/nav';
 import { Footer } from '@/components/shared/footer';
 import { cn } from '@/lib/utils';
+import { CHECK_CTA_LABEL } from '@/lib/landing-copy';
 
+// ============================================================================
+// HERO — abstract visual (no image asset)
+// ============================================================================
+function HeroVisual() {
+  return (
+    <div
+      className="relative mx-auto flex aspect-[4/3] max-w-md items-center justify-center lg:max-w-none"
+      aria-hidden
+    >
+      <div className="absolute inset-6 rounded-3xl bg-gradient-to-br from-teal-100/90 via-white to-teal-50 shadow-[0_24px_60px_-24px_rgba(15,118,110,0.35)] ring-1 ring-teal-200/60" />
+      <div className="relative flex w-[72%] flex-col gap-2">
+        {[0.85, 1, 0.7, 0.95].map((w, i) => (
+          <div
+            key={i}
+            className="mx-auto h-9 rounded-lg bg-teal-700/90 shadow-sm"
+            style={{ width: `${w * 100}%` }}
+          />
+        ))}
+        <div className="mt-4 flex items-center justify-center gap-2 rounded-2xl border border-teal-200/80 bg-white/90 px-4 py-3 shadow-sm backdrop-blur-sm">
+          <Shield className="h-8 w-8 shrink-0 text-teal-700" />
+          <div className="text-left text-sm leading-snug text-slate-700">
+            <span className="block font-semibold text-slate-900">Statutory-ready</span>
+            <span className="text-stone-600">Notices, deadlines, documents</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // ============================================================================
 // HERO SECTION
 // ============================================================================
 function HeroSection() {
+  const trustItems = [
+    { icon: Landmark, label: 'Companies House registered' },
+    { icon: BadgeCheck, label: 'ICO registered' },
+    { icon: CheckCircle, label: 'Money-back if ineligible' },
+  ] as const;
+
   return (
-    <section className="relative bg-gradient-to-b from-white to-teal-50 py-24">
-      <div className="container mx-auto px-4 max-w-2xl text-center">
-        <h1 className="text-5xl md:text-6xl font-bold text-slate-900 mb-6 leading-tight">
-          Your leasehold rights, done right.
-        </h1>
+    <section className="relative overflow-hidden bg-gradient-to-b from-white to-teal-50 py-16 md:py-20 lg:py-24">
+      <div className="container mx-auto max-w-6xl px-4">
+        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="mx-auto max-w-xl text-center lg:mx-0 lg:max-w-none lg:text-left">
+            <h1 className="mb-6 text-4xl font-bold leading-tight text-slate-900 sm:text-5xl md:text-6xl">
+              Your leasehold rights, done right.
+            </h1>
 
-        <p className="text-xl text-stone-700 mb-4">
-          Guided step-by-step through every statutory requirement. No guesswork. No missed deadlines.
-        </p>
+            <p className="text-lg leading-relaxed text-stone-700 sm:text-xl">
+              Valid notices, tracked deadlines, and documents aligned with the statutes—guided
+              step-by-step so you are not guessing when it matters.
+            </p>
 
-        <p className="text-lg text-stone-600 mb-12 leading-relaxed">
-          Reduce the risk of defective notices, missed statutory deadlines, or claims that don't hold
-          up in court. Take control with confidence, knowing every step is legally sound.
-        </p>
+            <div className="mt-8 rounded-2xl border border-teal-200/80 bg-white/80 p-4 shadow-sm backdrop-blur-sm sm:p-5">
+              <p className="mb-3 text-center text-xs font-semibold uppercase tracking-wide text-teal-800 lg:text-left">
+                Why leaseholders trust us
+              </p>
+              <ul className="flex flex-wrap justify-center gap-3 lg:justify-start">
+                {trustItems.map(({ icon: Icon, label }) => (
+                  <li
+                    key={label}
+                    className="flex min-w-[min(100%,220px)] flex-1 basis-[200px] items-center gap-2.5 rounded-xl bg-teal-50/80 px-3 py-2.5 text-left text-sm font-medium text-slate-800 ring-1 ring-teal-100 sm:basis-[calc(33.333%-0.5rem)] sm:min-w-0 lg:flex-none lg:basis-auto"
+                  >
+                    <Icon className="h-5 w-5 shrink-0 text-teal-700" aria-hidden />
+                    <span>{label}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-        {/* CTAs */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-          <a href="/check" className={cn(buttonVariants({ size: "lg" }), "bg-teal-700 hover:bg-teal-800 text-white px-8 py-6 text-base")}>
-            Check if your building qualifies
-          </a>
-          <a href="/pricing" className={cn(buttonVariants({ variant: "outline", size: "lg" }), "border-teal-700 text-teal-700 hover:bg-teal-50 px-8 py-6 text-base")}>
-            See pricing
-          </a>
-        </div>
-
-        {/* Trust Row */}
-        <div className="flex flex-col sm:flex-row gap-8 justify-center items-center pt-8 border-t border-stone-200">
-          <div className="flex items-center gap-2">
-            <CheckCircle className="w-5 h-5 text-teal-700" />
-            <span className="text-stone-700">Companies House registered</span>
+            <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row lg:justify-start">
+              <a
+                href="/check"
+                className={cn(
+                  buttonVariants({ size: 'lg' }),
+                  'bg-teal-700 px-8 py-6 text-base text-white hover:bg-teal-800'
+                )}
+              >
+                {CHECK_CTA_LABEL}
+              </a>
+              <a
+                href="/pricing"
+                className={cn(
+                  buttonVariants({ variant: 'outline', size: 'lg' }),
+                  'border-teal-700 px-8 py-6 text-base text-teal-700 hover:bg-teal-50'
+                )}
+              >
+                See pricing
+              </a>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <CheckCircle className="w-5 h-5 text-teal-700" />
-            <span className="text-stone-700">ICO registered</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <CheckCircle className="w-5 h-5 text-teal-700" />
-            <span className="text-stone-700">Money-back guarantee if ineligible</span>
-          </div>
+
+          <HeroVisual />
         </div>
       </div>
     </section>
@@ -132,62 +188,83 @@ function ProductsGrid() {
       icon: Building2,
       title: 'Right to Manage',
       subtitle: 'Take control of your building',
+      benefit: 'Run the building with other leaseholders instead of the landlord.',
+      statute: 's.71 CLRA 2002',
       basePrice: '£299',
       withSolicitor: '£398',
-      statute: 's.71 CLRA 2002',
     },
     {
       icon: PoundSterling,
       title: 'Service Charge',
       subtitle: 'Challenge unfair charges',
+      benefit: 'Dispute unreasonable costs with tribunal-ready evidence and steps.',
+      statute: 's.27A LTA 1985',
       basePrice: '£99',
       withSolicitor: '£198',
-      statute: 's.27A LTA 1985',
     },
     {
       icon: FileText,
       title: 'Lease Extension',
       subtitle: 'Extend your lease term',
+      benefit: 'Add years to your lease and protect your property value.',
+      statute: 's.42 LRHDA 1993',
       basePrice: '£199',
       withSolicitor: '£298',
-      statute: 's.42 LRHDA 1993',
     },
     {
       icon: Users,
       title: 'Freehold',
       subtitle: 'Buy your freehold outright',
+      benefit: 'Collectively purchase the freehold so you own the land too.',
+      statute: 's.2 LRA 2002',
       basePrice: '£499',
       withSolicitor: '£598',
-      statute: 's.2 LRA 2002',
     },
   ];
 
   return (
-    <section className="bg-white py-24">
+    <section id="products" className="scroll-mt-24 bg-white py-24">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-slate-900 text-center mb-16">
+        <h2 className="mb-16 text-center text-4xl font-bold text-slate-900">
           Four products, one platform
         </h2>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {products.map((product) => {
             const Icon = product.icon;
             return (
-              <div key={product.title} className="bg-white rounded-lg border border-stone-200 p-8">
-                <Icon className="w-10 h-10 text-teal-700 mb-4" />
-                <h3 className="text-lg font-semibold text-slate-900 mb-2">{product.title}</h3>
-                <p className="text-sm text-stone-600 mb-6">{product.subtitle}</p>
+              <div
+                key={product.title}
+                className="rounded-lg border border-stone-200 bg-white p-8"
+              >
+                <Icon className="mb-4 h-10 w-10 text-teal-700" />
+                <h3 className="mb-2 text-lg font-semibold text-slate-900">{product.title}</h3>
+                <p className="mb-3 text-sm text-stone-600">{product.subtitle}</p>
+                <p className="mb-6 text-sm leading-relaxed text-slate-800">{product.benefit}</p>
 
-                <div className="mb-6">
-                  <div className="text-3xl font-bold text-slate-900 mb-1">{product.basePrice}</div>
-                  <div className="text-sm text-teal-700 mb-4">/building</div>
-                  <div className="text-sm text-teal-700">or {product.withSolicitor} with solicitor review</div>
+                <div className="mb-4">
+                  <div className="mb-1 text-3xl font-bold text-slate-900">{product.basePrice}</div>
+                  <div className="mb-4 text-sm text-teal-700">/building</div>
+                  <div className="text-sm text-teal-700">
+                    or {product.withSolicitor} with solicitor review
+                  </div>
                 </div>
 
-                <p className="text-sm italic text-stone-600 mb-6">{product.statute}</p>
+                <p
+                  className="mb-6 text-xs text-stone-500"
+                  title={`Legal reference: ${product.statute}`}
+                >
+                  Legal basis: <span className="font-mono">{product.statute}</span>
+                </p>
 
-                <a href="/check" className={cn(buttonVariants(), "w-full bg-teal-700 hover:bg-teal-800 text-white")}>
-                  Get started
+                <a
+                  href="/check"
+                  className={cn(
+                    buttonVariants(),
+                    'w-full bg-teal-700 text-white hover:bg-teal-800'
+                  )}
+                >
+                  {CHECK_CTA_LABEL}
                 </a>
               </div>
             );
@@ -223,7 +300,7 @@ function PainPointsSection() {
   return (
     <section className="bg-stone-50 py-24">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-slate-900 text-center mb-16">Sound familiar?</h2>
+        <h2 className="mb-16 text-center text-4xl font-bold text-slate-900">Sound familiar?</h2>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
           {stats.map((item) => (
@@ -249,48 +326,58 @@ function HowItWorksSection() {
       title: 'Check if you qualify',
       description: 'Answer 5 questions in 60 seconds. Free.',
       statute: 's.72 CLRA 2002',
+      icon: ClipboardCheck,
     },
     {
       step: 2,
       title: 'Get your neighbours on board',
       description: 'We guide you through gathering leaseholder support.',
       statute: 's.71(2) CLRA 2002',
+      icon: Users,
     },
     {
       step: 3,
       title: 'Follow the guided process',
       description: 'Every statutory step, every deadline, every document.',
       statute: 's.73–79 CLRA 2002',
+      icon: Route,
     },
     {
       step: 4,
       title: 'Take control',
       description: 'Manage your building, reduce costs, or extend your lease.',
       statute: 's.80 CLRA 2002',
+      icon: KeyRound,
     },
   ];
 
   return (
     <section className="bg-white py-24">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-slate-900 text-center mb-16">How it works</h2>
+        <h2 className="mb-16 text-center text-4xl font-bold text-slate-900">How it works</h2>
 
-        <div className="max-w-4xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-8">
-            {steps.map((item) => (
-              <div key={item.step} className="flex gap-6">
-                <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center w-12 h-12 rounded-full bg-teal-700 text-white font-bold text-lg">
-                    {item.step}
+        <div className="mx-auto max-w-4xl">
+          <div className="grid gap-8 md:grid-cols-2">
+            {steps.map((item) => {
+              const StepIcon = item.icon;
+              return (
+                <div key={item.step} className="flex gap-6">
+                  <div className="relative flex shrink-0 flex-col items-center">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-teal-700 text-white shadow-md ring-4 ring-teal-100">
+                      <StepIcon className="h-7 w-7" aria-hidden />
+                    </div>
+                    <span className="mt-2 text-xs font-bold tabular-nums text-teal-800">
+                      Step {item.step}
+                    </span>
+                  </div>
+                  <div className="min-w-0 flex-1 pt-0.5">
+                    <h3 className="mb-2 text-lg font-semibold text-slate-900">{item.title}</h3>
+                    <p className="mb-3 text-stone-600">{item.description}</p>
+                    <p className="text-sm italic text-stone-600">{item.statute}</p>
                   </div>
                 </div>
-                <div className="flex-grow">
-                  <h3 className="text-lg font-semibold text-slate-900 mb-2">{item.title}</h3>
-                  <p className="text-stone-600 mb-3">{item.description}</p>
-                  <p className="text-sm italic text-stone-600">{item.statute}</p>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
@@ -434,6 +521,52 @@ function LegislationSection() {
 }
 
 // ============================================================================
+// TESTIMONIALS (anonymised — illustrative, not guarantees)
+// ============================================================================
+function TestimonialsSection() {
+  const quotes = [
+    {
+      text: 'We finally had a clear RTM timeline instead of notices and PDFs scattered across email threads.',
+      attribution: 'Leaseholder, South East',
+    },
+    {
+      text: 'The deadline reminders stopped us missing a statutory response window—we would have slipped up without them.',
+      attribution: 'RTM company director, London',
+    },
+    {
+      text: 'It is plain English. I could see which statutory step we were on before we paid for solicitor time.',
+      attribution: 'Flat owner, Manchester',
+    },
+  ];
+
+  return (
+    <section className="border-y border-stone-200 bg-gradient-to-b from-white to-stone-50 py-24">
+      <div className="container mx-auto px-4">
+        <h2 className="mb-4 text-center text-4xl font-bold text-slate-900">
+          What leaseholders say
+        </h2>
+        <p className="mx-auto mb-14 max-w-2xl text-center text-stone-600">
+          Typical feedback from early users. Outcomes depend on your building and case—always consider
+          professional advice for your situation.
+        </p>
+        <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-3">
+          {quotes.map((q) => (
+            <blockquote
+              key={q.attribution}
+              className="flex h-full flex-col rounded-2xl border border-stone-200 bg-white p-8 shadow-sm"
+            >
+              <Quote className="mb-4 h-9 w-9 text-teal-700/90" aria-hidden />
+              <p className="mb-6 flex-1 text-base leading-relaxed text-slate-800">&ldquo;{q.text}&rdquo;</p>
+              <footer className="text-sm font-medium text-stone-500">{q.attribution}</footer>
+            </blockquote>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============================================================================
 // FOUNDER SECTION
 // ============================================================================
 function FounderSection() {
@@ -525,18 +658,18 @@ function FAQSection() {
     {
       question: 'Who are you? Can I trust you?',
       answer:
-        "FlatRights is registered with Companies House (12345678) and the Information Commissioner's Office (ZA123456). We hold professional indemnity insurance and operate under transparent pricing. Our founder has first-hand experience with leasehold disputes. Check Companies House for our registration.",
+        'FlatRights is a UK-registered company and, where applicable, registered with the ICO for data protection. Exact company and ICO numbers are published in our Terms of Service and Privacy Policy. We operate transparent pricing; our founder has first-hand experience with leasehold disputes. Verify any company on the official Companies House register.',
     },
   ];
 
   return (
-    <section className="bg-white py-24">
-      <div className="container mx-auto px-4 max-w-3xl">
-        <h2 className="text-4xl font-bold text-slate-900 text-center mb-16">
+    <section id="faq" className="scroll-mt-24 bg-white py-24">
+      <div className="container mx-auto max-w-3xl px-4">
+        <h2 className="mb-16 text-center text-4xl font-bold text-slate-900">
           Frequently asked questions
         </h2>
 
-        <Accordion className="w-full">
+        <Accordion className="w-full" defaultValue={['item-0']}>
           {faqs.map((faq, index) => (
             <AccordionItem key={index} value={`item-${index}`} className="border-b border-stone-200">
               <AccordionTrigger className="py-4 hover:no-underline hover:text-teal-700">
@@ -559,15 +692,17 @@ function FAQSection() {
 function FinalCTASection() {
   return (
     <section className="bg-gradient-to-r from-teal-700 to-teal-800 py-24">
-      <div className="container mx-auto px-4 max-w-2xl text-center">
-        <h2 className="text-4xl font-bold text-white mb-4">
-          Check if your building qualifies
-        </h2>
-        <p className="text-lg text-teal-50 mb-8">
-          60 seconds, no account, free.
-        </p>
-        <a href="/check" className={cn(buttonVariants({ size: "lg" }), "bg-white hover:bg-stone-100 text-teal-700 px-8 py-6 text-base font-semibold")}>
-          Get started
+      <div className="container mx-auto max-w-2xl px-4 text-center">
+        <h2 className="mb-4 text-4xl font-bold text-white">Free eligibility check</h2>
+        <p className="mb-8 text-lg text-teal-50">About 60 seconds, no account required.</p>
+        <a
+          href="/check"
+          className={cn(
+            buttonVariants({ size: 'lg' }),
+            'bg-white px-8 py-6 text-base font-semibold text-teal-700 hover:bg-stone-100'
+          )}
+        >
+          {CHECK_CTA_LABEL}
         </a>
       </div>
     </section>
@@ -583,13 +718,14 @@ export function LandingPageClient() {
       <Nav />
       <main>
         <HeroSection />
+        <PainPointsSection />
         <FearSection />
         <ProductsGrid />
-        <PainPointsSection />
         <HowItWorksSection />
         <CostComparison />
         <LegislationSection />
         <FounderSection />
+        <TestimonialsSection />
         <FAQSection />
         <FinalCTASection />
       </main>

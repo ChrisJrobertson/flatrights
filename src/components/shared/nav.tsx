@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Shield } from 'lucide-react'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { CHECK_CTA_LABEL } from '@/lib/landing-copy'
 
 export function Nav({ activePath }: { activePath?: string }) {
   return (
@@ -54,7 +55,7 @@ export function Nav({ activePath }: { activePath?: string }) {
             Guides
           </Link>
           <Link href="/check" className={cn(buttonVariants({ size: "sm" }))}>
-            Check eligibility
+            {CHECK_CTA_LABEL}
           </Link>
         </div>
       </div>
