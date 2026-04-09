@@ -3,7 +3,8 @@
 import { useActionState } from 'react'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { createBuildingAction, type CreateBuildingState } from './actions'
@@ -90,9 +91,15 @@ export function NewBuildingForm() {
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
-          <Button type="button" variant="outline" asChild>
-            <Link href="/buildings">Cancel</Link>
-          </Button>
+          <Link
+            href="/buildings"
+            className={cn(
+              buttonVariants({ variant: 'outline' }),
+              'inline-flex h-10 items-center justify-center px-4 text-center'
+            )}
+          >
+            Cancel
+          </Link>
           <Button type="submit" disabled={isPending} className="bg-teal-700 hover:bg-teal-800">
             {isPending ? 'Saving…' : 'Create building'}
           </Button>

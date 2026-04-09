@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FlatRights
 
-## Getting Started
+UK leasehold workflow platform: **Right to Manage**, **service charge challenges**, **lease extensions**, and **collective enfranchisement** — with statutory deadlines, guided steps, and document workflows.
 
-First, run the development server:
+- **Stack:** [Next.js 16](https://nextjs.org) (App Router), React 19, Tailwind CSS v4, [Supabase](https://supabase.com) (Auth + Postgres), Stripe, Resend.
+- **Network boundary:** `src/proxy.ts` (Next.js 16 convention — session refresh via `src/lib/supabase/middleware.ts`). Do not add root `middleware.ts` for new work.
+
+## Docs in this repo
+
+| File | Purpose |
+|------|---------|
+| [`.cursorrules`](./.cursorrules) | Positioning and engineering rules for AI-assisted work |
+| [`PROJECT_SYNOPSIS.md`](./PROJECT_SYNOPSIS.md) | Product overview |
+| [`CURSOR_PROMPTS.md`](./CURSOR_PROMPTS.md) | Sequential build prompts (1–18) |
+| [`DATABASE_SCHEMA.md`](./DATABASE_SCHEMA.md) | Schema notes; generated types live in `src/types/database.ts` |
+
+## Getting started
 
 ```bash
+npm install
+cp .env.example .env.local
+# Fill NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY from Supabase project settings
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Regenerate database types
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+After schema changes in Supabase:
 
-## Learn More
+```bash
+npx supabase gen types typescript --project-id bsqaranndomlkmaokdkb > src/types/database.ts
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Development server |
+| `npm run build` | Production build |
+| `npm run start` | Run production server locally |
+| `npm run lint` | ESLint |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploy
 
-## Deploy on Vercel
+The app is designed for [Vercel](https://vercel.com): set environment variables in the project dashboard to match `.env.example` (no secrets in the repo).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Licence
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Private — All rights reserved unless otherwise stated.
